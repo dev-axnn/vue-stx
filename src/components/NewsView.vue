@@ -6,7 +6,7 @@
         <ul class="news-list">
           <!-- item 이라는 함수에 각각의 배열(url, title...)값을 담아 전달 -->
           <!-- 이 부분 암기 ▼ -->
-          <li v-for="(item, index) in noticedata" v-bind:key="index">
+          <li v-for="(item, index) in noticeData" v-bind:key="index">
             <a :href="item.url"><span>{{item.title}}</span></a>
           </li>
         </ul>
@@ -14,7 +14,7 @@
       <div class="news-box">
         <h3>보도자료</h3>
         <ul class="news-list">
-          <li v-for="(item, index) in newsdata" :key="index">
+          <li v-for="(item, index) in newsData" :key="index">
             <a :href="item.url"><span>{{item.title}}</span></a>
           </li>
         </ul>
@@ -24,9 +24,23 @@
 </template>
 
 <script>
-export default {
-  props: ['noticedata', 'newsdata']
-}
+  import { computed } from 'vue';
+  import { useStore } from 'vuex';
+
+  export default {
+    setup(){
+      const store = useStore();
+      const noticeData = computed(() => store.getters.getNoticeData);
+      const newsData = computed(() => store.getters.getNewsData);
+      // noticeData.value = store.state.noticeData;
+      // newsData.value = store.state.newsData;
+
+      return{
+        noticeData,
+        newsData
+      }
+    }
+  }
 </script>
 
 <style>
