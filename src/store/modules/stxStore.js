@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const state = {
   gnbData: [
     {mainurl: '#', maintxt: '회사소개', subData: [
@@ -49,7 +51,23 @@ const state = {
   ]
 };
 
-const actions = {};
+const actions = {
+  fetchGnb(){
+    axios.get('/data/gnb.json')
+    .then(response => console.log("axios", response))
+    .catch(err => console.log(err))
+  },
+  fetchNotice(){
+    axios.get('/data/notice.json')
+    .then(response => console.log(response))
+    .catch(err => console.log(err))
+  },
+  fetchNews(){
+    axios.get('/data/news.json')
+    .then(response => console.log(response))
+    .catch(err => console.log(err))
+  }
+};
 
 const mutations = {};
 

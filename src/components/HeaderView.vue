@@ -32,6 +32,8 @@
     setup() {
       const store = useStore();
       const gnbData = computed(() => store.getters.getGnbData);
+      // vuex 의 store 의 actions 를 요청한다.
+      store.dispatch('fetchGnb');
 
       onMounted( () => {
         // .header를 저장한다.

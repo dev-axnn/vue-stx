@@ -32,8 +32,10 @@
       const store = useStore();
       const noticeData = computed(() => store.getters.getNoticeData);
       const newsData = computed(() => store.getters.getNewsData);
-      // noticeData.value = store.state.noticeData;
-      // newsData.value = store.state.newsData;
+
+      // vuex 의 actions 를 요청
+      store.dispatch('fetchNotice');
+      store.dispatch('fetchNews');
 
       return{
         noticeData,
