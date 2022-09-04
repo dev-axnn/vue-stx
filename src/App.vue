@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal></Modal>
+    <ModalV></ModalV>
 
     <div class="wrap">
       <Header></Header>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import Modal from './components/ModalPop.vue';
+  import ModalV from './components/ModalView.vue';
   import Header from './components/HeaderView.vue';
   import Visual from './components/VisualView.vue';
   import WorkPart from './components/WorkPartView.vue';
@@ -27,7 +27,7 @@
   export default {
     name: "App",
     components: {
-      Modal,
+      ModalV,
       Header,
       Visual,
       WorkPart,
