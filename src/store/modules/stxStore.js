@@ -1,75 +1,62 @@
 import axios from 'axios';
 
 const state = {
-  gnbData: [
-    {mainurl: '#', maintxt: '회사소개', subData: [
-      {suburl: '#', subtxt: '인사말'},
-      {suburl: '#', subtxt: 'STX건설'},
-      {suburl: '#', subtxt: '기업문화'},
-      {suburl: '#', subtxt: 'STX건설연혁'},
-      {suburl: '#', subtxt: '조직안내'},
-      {suburl: '#', subtxt: '윤리경영'},
-      {suburl: '#', subtxt: '안전·환경·품질경영'},
-      {suburl: '#', subtxt: '찾아오시는길'}
-    ]},
-    {mainurl: '#', maintxt: '사업분야', subData: [
-      {suburl: '#', subtxt: '건축사업'},
-      {suburl: '#', subtxt: '주택사업'},
-      {suburl: '#', subtxt: '토목사업'},
-      {suburl: '#', subtxt: '플랜트/공작기계사업'},
-      {suburl: '#', subtxt: '해외사업'}
-    ]},
-    {mainurl: '#', maintxt: '사회공헌', subData: [
-      {suburl: '#', subtxt: '나눔의생각'},
-      {suburl: '#', subtxt: '주요활동분야'},
-      {suburl: '#', subtxt: '활동현황'}
-    ]},
-    {mainurl: '#', maintxt: '홍보센터', subData: [
-      {suburl: '#', subtxt: '홍보동영상'},
-      {suburl: '#', subtxt: '홍보브로슈어'},
-      {suburl: '#', subtxt: 'STX건설뉴스'}
-    ]},
-    {mainurl: '#', maintxt: '고객지원', subData: [
-      {suburl: '#', subtxt: '자주묻는질문'},
-      {suburl: '#', subtxt: '고객문의'}
-    ]},
-    {mainurl: '#', maintxt: '채용정보', subData: [
-      {suburl: '#', subtxt: '채용안내'},
-      {suburl: '#', subtxt: '채용공고'},
-      {suburl: '#', subtxt: '채용FAQ'}
-    ]}
-  ],
-  noticeData: [
-    {url: 'a.html', title:'에스티엑스건설자산관리 주식회사 해산결의에 따른 채권신고 안내 공고 (2차)'},
-    {url: 'b.html', title:'에스티엑스건설자산관리 주식회사 해산결의에 따른 채권신고 안내 공고 (1차)'},
-    {url: 'c.html', title:'2021년도 협력업체 모집공고'},
-    {url: 'd.html', title:'STX건설 상호 사용 관련 안내'}
-  ],
-  newsData: [
-    {url: 'k.html', title:'STX건설, 춘천 레고랜드 테마파크 시공사 ‘선정’'},
-    {url: 'i.html', title:'STX건설, 2018년 성장 청신호'}
-  ]
+  gnbData: [],
+  noticeData: [],
+  newsData: []
 };
 
 const actions = {
-  fetchGnb(){
-    axios.get('/data/gnb.json')
-    .then(response => console.log("axios", response))
+  // gnb.json 데이터를 axios로 받아온다.
+  // mutation: 즉, state 를 업데이트 할 때 필요한 method(commit)
+  fetchGnb({commit}){
+    axios.get('./data/gnb.json')
+    .then(response => {
+      console.log("axios", response);
+      // commit('mutation method name', 전달할 값)
+      commit('UPDATE_GNB', response.data);
+    })
     .catch(err => console.log(err))
   },
-  fetchNotice(){
-    axios.get('/data/notice.json')
-    .then(response => console.log(response))
+  fetchNotice({commit}){
+    axios.get('./data/notice.json')
+    .then(response => {
+      console.log(response);
+      commit('UPDATE_NOTICE', response.data);
+    })
     .catch(err => console.log(err))
   },
-  fetchNews(){
-    axios.get('/data/news.json')
-    .then(response => console.log(response))
+  fetchNews({commit}){
+    // news.json 을 axios로 호출
+    axios.get('./data/news.json')
+    .then(response => {
+      console.log(response)
+      // mutation 으로 자료를 전송한다. (commit이 필요)
+      // axios 는 받아온 자료를 .data 에 보관
+      commit('UPDATE_NEWS', response.data)
+    })
     .catch(err => console.log(err))
   }
 };
 
-const mutations = {};
+// state의 값을 업데이트 하기 위한 연동
+const mutations = {
+  // method_name(state(고정값), 전달할 재료){}
+  UPDATE_GNB(state, payload){
+    console.log(payload)
+    // 최종적으로 store 데이터 state.gnbData 업데이트
+    state.gnbData = payload;
+  },
+
+  UPDATE_NEWS(state, payload){
+    state.newsData = payload;
+  },
+
+  UPDATE_NOTICE(state, payload){
+    state.noticeData = payload;
+  }
+
+};
 
 const getters = {
   getGnbData(state){
