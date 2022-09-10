@@ -17,7 +17,7 @@
         </ul>
       </div>
       <div class="modal-close">
-        확인했습니다.
+        확인했습니다. <i>( Enter 하여 닫기 )</i>
       </div>
     </div>
   </div>
@@ -36,7 +36,22 @@
         modalClose.click(function(){
           // modalWrap.hide();
           modalWrap.stop().fadeOut(300);
-        });   
+          $('html').css('overflow', 'auto');
+        });
+        $('html').keydown(function (key) {
+          if (key.keyCode == 13) {
+            modalWrap.stop().fadeOut(200);
+            $('html').css('overflow', 'auto');
+          }
+        });
+        let modalMain = $('.modal-main');
+        modalMain.click(function (event) {
+          event.stopPropagation();
+        });
+        modalWrap.click(function () {
+          modalWrap.stop().fadeOut(200);
+          $('html').css('overflow', 'auto');
+        });
       });
 
       return{}
@@ -47,6 +62,8 @@
 <style scoped>
   /* Modal Popup */
   .modal-wrap {
+    font-family: 'Noto Sans KR', Helvetica, '맑은 고딕', 'malgun gothic', 'Apple SD Gothic Neo', sans-serif;
+    color: #333;
     position: fixed;
     left: 0;
     top: 0;
@@ -76,7 +93,7 @@
     height: 86px;
     border-radius: 43px;
     border: 4px solid #fff;
-    background: #242A53 url('@/assets/images/ahn-symbol_300x300_white.png') no-repeat center;
+    background: #00b7ff url('@/assets/images/ahn-symbol_300x300_white.png') no-repeat center;
     background-size: 60%;
   }
 
@@ -90,7 +107,7 @@
   }
 
   .modal-notice strong {
-    color: #8366b4;
+    color: #ec3f87;
   }
 
   .modal-notice span {
@@ -99,6 +116,22 @@
     font-weight: 400;
     margin-top: 8px;
     letter-spacing: -0.8px;
+  }
+
+  .modal-corrections::-webkit-scrollbar {
+    width: 8px;
+    height: 5px;
+    background-color: #f7f7f7;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+  }
+
+  .modal-corrections::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
   }
 
   .modal-corrections {
@@ -110,6 +143,7 @@
     background: #eee;
     margin: 0 auto;
     padding: 15px 20px;
+    letter-spacing: -0.8px;
   }
 
   .modal-corrections strong {
@@ -124,7 +158,6 @@
   .corrections-number {
     float: left;
     width: 6%;
-    /* font-weight: 700; */
   }
 
   .corrections-txt {
@@ -148,7 +181,14 @@
     color: #fff;
 
     cursor: pointer;
-    background: #242A53;
+    background: #00b7ff;
+  }
+
+  .modal-close i {
+    margin-left: 3px;
+    font-size: 12px;
+    font-weight: 400;
+    font-style: normal;
   }
   /* /Modal Popup */
 </style>
